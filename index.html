@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Truth or Dare Cinta</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            color: #ffffff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.2rem;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            padding: 20px;
+            width: 300px;
+            transition: transform 0.2s;
+        }
+
+        .game-card:hover {
+            transform: scale(1.05);
+        }
+
+        .play-button {
+            background: #ff6f61;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .play-button:hover {
+            background: #ff8566;
+        }
+
+        .play-button:disabled {
+            background: #ffb6a3;
+            cursor: not-allowed;
+        }
+
+        footer {
+            margin-top: 30px;
+            padding: 10px;
+        }
+
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .floating-heart {
+            position: absolute;
+            animation: floatUp 5s infinite;
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        @keyframes floatUp {
+            from { transform: translateY(100vh); opacity: 0; }
+            to { transform: translateY(-100vh); opacity: 1; }
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Truth or Dare Cinta 💕</h1>
+        <p>Bermain Truth or Dare untuk mengungkap rahasia dan tantangan seru!</p>
+    </header>
+    
+    <div class="game-card">
+        <h2>Truth or Dare</h2>
+        <div id="truth-or-dare">
+            <p id="tod-question">Pilih mode untuk memulai!</p>
+            <button class="play-button" onclick="startTruthOrDare('truth')">Truth</button>
+            <button class="play-button" onclick="startTruthOrDare('dare')">Dare</button>
+            <button id="wa-button" class="play-button" style="display:none;" onclick="sendToWhatsApp()">Kirim Jawaban via WhatsApp</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Truth or Dare Cinta. Dibuat dengan ❤️ dan dedikasi.</p>
+    </footer>
+
+    <div class="floating-hearts">
+        <span class="floating-heart" style="left: 10%; animation-delay: 0s;">💕</span>
+        <span class="floating-heart" style="left: 30%; animation-delay: 2s;">💖</span>
+        <span class="floating-heart" style="left: 50%; animation-delay: 4s;">💗</span>
+        <span class="floating-heart" style="left: 70%; animation-delay: 1s;">💙</span>
+        <span class="floating-heart" style="left: 90%; animation-delay: 3s;">💚</span>
+    </div>
+
+    <script>
+        const truthQuestions = [
+            "Apa hal paling romantis yang pernah kamu lakukan?",
+            "Apa ketakutan terbesar dalam hubungan?",
+            "Apa kah kamu masih masih mengingat tentang masa lalu mu?",
+            "Katakan dengan jujur apa kamu masih suka melirik sana sini?",
+            "Katakan dengan jujur apa alasanmu tetap ramah padahal pasangan sangat membenci nya?",
+            "Siapa yang pertama kali kamu jatuh cinta?"
+        ];
+
+        const dareChallenges = [
+            "Kirim pesan cinta ke pasanganmu sekarang.",
+            "Nyanyikan lagu cinta favoritmu.",
+            "Pap ketek wajib.",
+            "Pap juling sambil melet.",
+            "Pap full body sebelum bobok.",
+            "Tulis puisi cinta dalam waktu 1 menit."
+        ];
+
+        let currentQuestion = '';
+        let waButton = document.getElementById('wa-button');
+
+        function startTruthOrDare(mode) {
+            if (currentQuestion) {
+                alert('Silakan kirim jawaban Anda sebelum melanjutkan ke pertanyaan berikutnya.');
+                return;
+            }
+            currentQuestion = mode === 'truth' 
+                ? truthQuestions[Math.floor(Math.random() * truthQuestions.length)]
+                : dareChallenges[Math.floor(Math.random() * dareChallenges.length)];
+            document.getElementById('tod-question').innerText = currentQuestion;
+            waButton.style.display = 'inline-block';
+        }
+
+        function sendToWhatsApp() {
+            const waLink = `https://wa.me/62085212637719?text=${encodeURIComponent(currentQuestion)}`;
+            window.open(waLink, '_blank');
+            currentQuestion = ''; // Reset the question after sending
+            waButton.style.display = 'none'; // Hide the WhatsApp button after sending
+        }
+    </script>
+</body>
+</html>
